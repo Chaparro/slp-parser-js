@@ -1,17 +1,3 @@
-const { default: SlippiGame } = require('slp-parser-js');
-const path = require('path');
-
-const testFolder = './files/';
-const fs = require('fs');
-
-var stages = {};
-stages[2] = 'Fountain Of Dreams';
-stages[3] = 'Pokemon Stadium';
-stages[8] = 'Yoshis Story';
-stages[28] = 'Dream Land';
-stages[31] = 'Battlefield';
-stages[32] = 'Final Destination';
-
 const characters = [{
   id: 0,
   name: "Captain Falcon",
@@ -118,41 +104,16 @@ const characters = [{
   shortName: "Ganon",
 }];
 
+function getCharacterInfo(characterId) {
+  return characters[characterId];
+}
 
-fs.readdir(testFolder, function(err, items) {
-    for (var i=0; i<items.length; i++) {
+function getCharacterShortName(characterId) {
+  const character = getCharacterInfo(characterId) || {};
+  return character.shortName;
+}
 
-    	const game = new SlippiGame(testFolder + items[i]);
-    	console.log(i + ' ' + items[i]);
- 	
-		const settings = game.getSettings();
-		console.log(settings);
-		console.log('played on: ' + stages[settings.stageId]);
-		console.log(characters[settings.players[0].characterId].name + ' VS ' + characters[settings.players[1].characterId].name);
-		console.log(settings.players[0].nametag + ' VS ' + settings.players[1].nametag);
-
-		const metadata = game.getMetadata();
-		//console.log(metadata);
-
-		const stats = game.getStats();
-		console.log(stats.actionCounts);
-		console.log(stats.overall);
-    }
-});
-
-
- //    const game = new SlippiGame(file);
- 	
-	// const settings = game.getSettings();
-	// console.log(settings);
-
-	// const metadata = game.getMetadata();
-	// console.log(metadata);
-
-
-// Get metadata - start time, platform played on, etc
-
-
-// Get computed stats - openings / kill, conversions, etc
-//const stats = game.getStats();
-//console.log(stats);
+function getCharacterName(characterId) {
+  const character = getCharacterInfo(characterId) || {};
+  return character.name;
+}

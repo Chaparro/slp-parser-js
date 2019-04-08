@@ -1,5 +1,5 @@
 {
-  "name": "slp-parser-js",
+  "name": "slp-parser-js-report",
   "version": "2.3.0",
   "description": "Official javascript slp file parser",
   "license": "MIT",
@@ -48,7 +48,8 @@
   ],
   "dependencies": {
     "iconv-lite": "^0.4.24",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.11",
+    "slp-parser-js": "^2.3.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
