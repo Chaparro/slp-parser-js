@@ -118,26 +118,59 @@ const characters = [{
   shortName: "Ganon",
 }];
 
+combos = {};
+
+jsonCombo = {
+    "mode": "queue",
+    "replay": "",
+    "isRealTimeMode": false,
+    "queue": [] 
+};
+
+jsonString = '';
 
 fs.readdir(testFolder, function(err, items) {
     for (var i=0; i<items.length; i++) {
+    	var t_path = path.resolve(items[i]);
+    	//var absolutePath = path.normalize(absolutePath);
+    	var absolutePath = t_path.replace(/\\/g,"/");
+    	//console.log(absolutePath);
 
     	const game = new SlippiGame(testFolder + items[i]);
     	console.log(i + ' ' + items[i]);
  	
 		const settings = game.getSettings();
-		console.log(settings);
-		console.log('played on: ' + stages[settings.stageId]);
-		console.log(characters[settings.players[0].characterId].name + ' VS ' + characters[settings.players[1].characterId].name);
-		console.log(settings.players[0].nametag + ' VS ' + settings.players[1].nametag);
+		// console.log(settings);
+		// console.log('played on: ' + stages[settings.stageId]);
+		// console.log(characters[settings.players[0].characterId].name + ' VS ' + characters[settings.players[1].characterId].name);
+		// console.log(settings.players[0].nametag + ' VS ' + settings.players[1].nametag);
 
-		const metadata = game.getMetadata();
-		//console.log(metadata);
-
+		// const metadata = game.getMetadata();
+		// //console.log(metadata);
 		const stats = game.getStats();
-		console.log(stats.actionCounts);
-		console.log(stats.overall);
+		for (var j=0; j<stats.conversions.length; j++) {
+			if (stats.conversions[j].endPercent - stats.conversions[j].startPercent >= 60 ){
+				//console.log(stats.conversions[j]) //get the combo
+				comboData = {
+					startFrame : stats.conversions[j].startFrame,
+					lastFrame : stats.conversions[j].endFrame,
+					path : absolutePath
+				};
+				jsonCombo.queue.push(comboData);
+			} 
+		};
+		//console.log(stats.conversions);
+		// console.log(stats.actionCounts);
+		// console.log(stats.overall);
     }
+    //jsonString = JSON.stringify(jsonCombo);
+    //console.log(jsonString);
+    fs.writeFile('./comboData.json', JSON.stringify(jsonCombo), (err) => {
+    	if (!err) {
+        	console.log('done comboing!');
+    	}
+	});
+
 });
 
 
