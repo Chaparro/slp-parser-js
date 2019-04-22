@@ -131,8 +131,8 @@ jsonString = '';
 
 fs.readdir(testFolder, function(err, items) {
     for (var i=0; i<items.length; i++) {
-    	var t_path = path.resolve(items[i]);
-    	//var absolutePath = path.normalize(absolutePath);
+    	var t_path = path.resolve() + '/files/' + items[i];
+    	//console.log(t_path);
     	var absolutePath = t_path.replace(/\\/g,"/");
     	//console.log(absolutePath);
 
@@ -149,11 +149,11 @@ fs.readdir(testFolder, function(err, items) {
 		// //console.log(metadata);
 		const stats = game.getStats();
 		for (var j=0; j<stats.conversions.length; j++) {
-			if (stats.conversions[j].endPercent - stats.conversions[j].startPercent >= 60 ){
-				//console.log(stats.conversions[j]) //get the combo
+			if (stats.conversions[j].endPercent - stats.conversions[j].startPercent >= 60 && stats.conversions[j].didKill == true){
+				console.log(stats.conversions[j]) //get the combo
 				comboData = {
 					startFrame : stats.conversions[j].startFrame,
-					lastFrame : stats.conversions[j].endFrame,
+					endFrame : stats.conversions[j].endFrame,
 					path : absolutePath
 				};
 				jsonCombo.queue.push(comboData);
