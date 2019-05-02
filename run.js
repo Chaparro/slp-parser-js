@@ -132,9 +132,7 @@ jsonString = '';
 fs.readdir(testFolder, function(err, items) {
     for (var i=0; i<items.length; i++) {
     	var t_path = path.resolve() + '/files/' + items[i];
-    	//console.log(t_path);
     	var absolutePath = t_path.replace(/\\/g,"/");
-    	//console.log(absolutePath);
 
     	const game = new SlippiGame(testFolder + items[i]);
     	console.log(i + ' ' + items[i]);
@@ -145,12 +143,10 @@ fs.readdir(testFolder, function(err, items) {
 		// console.log(characters[settings.players[0].characterId].name + ' VS ' + characters[settings.players[1].characterId].name);
 		// console.log(settings.players[0].nametag + ' VS ' + settings.players[1].nametag);
 
-		// const metadata = game.getMetadata();
-		// //console.log(metadata);
 		const stats = game.getStats();
 		for (var j=0; j<stats.combos.length; j++) {
 			if (stats.combos[j].endPercent - stats.combos[j].startPercent >= 60 && stats.combos[j].didKill == true){
-				console.log(stats.combos[j]) //get the combo
+				console.log(stats.combos[j])
 				comboData = {
 					startFrame : stats.combos[j].startFrame,
 					endFrame : stats.combos[j].endFrame,
@@ -159,12 +155,9 @@ fs.readdir(testFolder, function(err, items) {
 				jsonCombo.queue.push(comboData);
 			} 
 		};
-		//console.log(stats.combos);
 		// console.log(stats.actionCounts);
 		// console.log(stats.overall);
     }
-    //jsonString = JSON.stringify(jsonCombo);
-    //console.log(jsonString);
     fs.writeFile('./comboData.json', JSON.stringify(jsonCombo), (err) => {
     	if (!err) {
         	console.log('done comboing!');
@@ -172,20 +165,3 @@ fs.readdir(testFolder, function(err, items) {
 	});
 
 });
-
-
- //    const game = new SlippiGame(file);
- 	
-	// const settings = game.getSettings();
-	// console.log(settings);
-
-	// const metadata = game.getMetadata();
-	// console.log(metadata);
-
-
-// Get metadata - start time, platform played on, etc
-
-
-// Get computed stats - openings / kill, combos, etc
-//const stats = game.getStats();
-//console.log(stats);
