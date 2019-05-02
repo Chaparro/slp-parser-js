@@ -148,18 +148,18 @@ fs.readdir(testFolder, function(err, items) {
 		// const metadata = game.getMetadata();
 		// //console.log(metadata);
 		const stats = game.getStats();
-		for (var j=0; j<stats.conversions.length; j++) {
-			if (stats.conversions[j].endPercent - stats.conversions[j].startPercent >= 60 && stats.conversions[j].didKill == true){
-				console.log(stats.conversions[j]) //get the combo
+		for (var j=0; j<stats.combos.length; j++) {
+			if (stats.combos[j].endPercent - stats.combos[j].startPercent >= 60 && stats.combos[j].didKill == true){
+				console.log(stats.combos[j]) //get the combo
 				comboData = {
-					startFrame : stats.conversions[j].startFrame,
-					endFrame : stats.conversions[j].endFrame,
+					startFrame : stats.combos[j].startFrame,
+					endFrame : stats.combos[j].endFrame,
 					path : absolutePath
 				};
 				jsonCombo.queue.push(comboData);
 			} 
 		};
-		//console.log(stats.conversions);
+		//console.log(stats.combos);
 		// console.log(stats.actionCounts);
 		// console.log(stats.overall);
     }
@@ -186,6 +186,6 @@ fs.readdir(testFolder, function(err, items) {
 // Get metadata - start time, platform played on, etc
 
 
-// Get computed stats - openings / kill, conversions, etc
+// Get computed stats - openings / kill, combos, etc
 //const stats = game.getStats();
 //console.log(stats);
